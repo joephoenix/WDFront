@@ -45,15 +45,33 @@
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="#">工作面板</a>
+          <a href="#">学习文件</a>
         </li>
-        <li class="breadcrumb-item active">党员分布</li>
+        <li class="breadcrumb-item active">思想汇报</li>
       </ol>
       <!-- Area Chart Example-->
       <div class="card mb-3">
         <div class="card-header">
-          <i class="fa fa-area-chart"></i>地点位置</div>
-        <div class="card-body" id="mybadidumap" style="height:450px;border:#ccc solid 1px;"></div>
+          <i class="fa fa-table"></i>两学一做汇总
+        </div>
+        <div class="card-body" id="orgalist">
+         <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-bordered" id="fileTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>文件名称</th>
+                  <th>文件路径</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th>文件名称</th>
+                  <th>文件路径</th>
+                </tr>
+              </tfoot>
+          </table>        
+        </div>
       </div>
     </div>
     <!-- /.container-fluid-->
@@ -102,76 +120,8 @@
     <!-- Custom scripts for this page-->
     <script src="js/sb-admin-datatables.min.js"></script>
     <script src="js/sb-admin-charts.min.js"></script>
-<<<<<<< HEAD
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script>
-    <script type="text/javascript">
-      //创建和初始化地图函数：
-      function initMap(){
-        var uname = $.cookie('username');
-        createMap();//创建地图
-        setMapEvent();//设置地图事件
-        addMapControl();//向地图添加控件
-        //地图
-        $.ajax(
-        {
-            type:"POST",
-            url:"http://123.206.128.207:8080/wisdomDang/memberList",
-            contentType:"application/json;charset=UTF-8",
-            data:JSON.stringify({"username":uname}),
-            dataType:"json",
-            header:{
-              "Content-Type":"application/json;charse=UTF-8"
-            },
-            success:function(data){
-              var json_data = data['status'];
-              if("success" == json_data){
-                var mlist = data['result'];
-                for(x in mlist){
-                  var mv = mlist[x];
-                  var longp = mv['longtude'];
-                  var latip = mv['latitude'];
-                  var point = new window.BMap.Point(longp,latip);
-                  var marker = new window.BMap.Marker(point);
-                  marker.setAnimation(BMAP_ANIMATION_BOUNCE);
-                  var label = new window.BMap.Label(mv['rname'], { offset: new window.BMap.Size(20, -10) });
-                  marker.setLabel(label);
-                  map.addOverlay(marker);
-                }
-              }else{
-                alert("PermissionBanished")
-                $(location).attr('href', 'login.html');
-              }
-            }
-        });        
-      }
-      //创建地图函数：
-      function createMap(){
-        var map = new BMap.Map("mybadidumap");//在百度地图容器中创建一个地图
-        var point = new BMap.Point(120.195645,30.329986);//定义一个中心点坐标
-        map.centerAndZoom(point,11);//设定地图的中心点和坐标并将地图显示在地图容器中
-        window.map = map;//将map变量存储在全局
-      }
-    
-      //地图事件设置函数：
-      function setMapEvent(){
-        map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
-        map.enableScrollWheelZoom();//启用地图滚轮放大缩小
-        map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
-        map.enableKeyboard();//启用键盘上下左右键移动地图
-      }
-    
-      //地图控件添加函数：
-      function addMapControl(){
-        //向地图中添加缩放控件
-        var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
-        map.addControl(ctrl_nav);
-        //向地图中添加比例尺控件
-        var ctrl_sca = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
-        map.addControl(ctrl_sca);
-      }
-      
-      initMap();//创建和初始化地图      
-      
+    <script type="text/javascript">      
       $(function(){
         var uname = $.cookie('username');
         //用户信息
@@ -224,20 +174,11 @@
               }
             }
           });
-      });
-      function logout(){
-        $.removeCookie();
-        $(location).attr('href', 'login.html');
-      } 
-=======
-    <script type="text/javascript">      
-      $(function(){
-        var uname = $.cookie('username');
-        //用户信息
+        //组织表格
         $.ajax(
           {
             type:"POST",
-            url:"http://123.206.128.207:8080/wisdomDang/memberInfo",
+            url:"http://123.206.128.207:8080/wisdomDang/showStudyFiles",
             contentType:"application/json;charset=UTF-8",
             data:JSON.stringify({"username":uname}),
             dataType:"json",
@@ -247,35 +188,11 @@
             success:function(data){
               var json_data = data['status'];
               if("success" == json_data){
-                var meminfo = data['memInfo'];
-                var rname = meminfo['rname'];
-                $('#userspan').html(rname);
-              }else{
-                alert("PermissionBanished")
-                $(location).attr('href', 'login.html');
-              }
-            }
-          });
-        //菜单
-        $.ajax(
-          {
-            type:"POST",
-            url:"http://123.206.128.207:8080/wisdomDang/showMenu",
-            contentType:"application/json;charset=UTF-8",
-            data:JSON.stringify({"username":uname}),
-            dataType:"json",
-            header:{
-              "Content-Type":"application/json;charse=UTF-8"
-            },
-            success:function(data){
-              var json_data = data['status'];
-              if("success" == json_data){
-                var mlist = data['menus'];
-                for(x in mlist){    //生成第一层菜单
-                  var power = mlist[x];
-                  if(power['plevel'] == 1){
-                    $("#leftmenu").append("<li class=\"nav-item\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"" + power['pname'] + "\"><a class=\"nav-link\" href=\"dashbord.html\"><i class=\"fa fa-fw fa-dashboard\"></i><span class=\"nav-link-text\">" +power['pname'] + "</span></a></li>");
-                  }
+                var flist = data['result'];
+                for(x in flist){    //生成表格
+                  var file = flist[x];
+                  var newRow = "<tr><td>" + file['fileName'] + "</td><td>" + file['filePath'] + "</td></tr>";
+                  $('#fileTable').append(newRow); 
                 }
               }else{
                 alert("PermissionBanished")
@@ -287,8 +204,7 @@
       function logout(){
         $.removeCookie();
         $(location).attr('href', 'login.html');
-      }  
->>>>>>> branch 'master' of https://github.com/joephoenix/WDFront.git
+      } 
     </script>
   </div>
 </body>
