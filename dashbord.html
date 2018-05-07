@@ -102,7 +102,6 @@
     <!-- Custom scripts for this page-->
     <script src="js/sb-admin-datatables.min.js"></script>
     <script src="js/sb-admin-charts.min.js"></script>
-<<<<<<< HEAD
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script>
     <script type="text/javascript">
       //创建和初始化地图函数：
@@ -228,69 +227,8 @@
       function logout(){
         $.removeCookie();
         $(location).attr('href', 'login.html');
-      } 
-=======
-    <script type="text/javascript">      
-      $(function(){
-        var uname = $.cookie('username');
-        //用户信息
-        $.ajax(
-          {
-            type:"POST",
-            url:"http://123.206.128.207:8080/wisdomDang/memberInfo",
-            contentType:"application/json;charset=UTF-8",
-            data:JSON.stringify({"username":uname}),
-            dataType:"json",
-            header:{
-              "Content-Type":"application/json;charse=UTF-8"
-            },
-            success:function(data){
-              var json_data = data['status'];
-              if("success" == json_data){
-                var meminfo = data['memInfo'];
-                var rname = meminfo['rname'];
-                $('#userspan').html(rname);
-              }else{
-                alert("PermissionBanished")
-                $(location).attr('href', 'login.html');
-              }
-            }
-          });
-        //菜单
-        $.ajax(
-          {
-            type:"POST",
-            url:"http://123.206.128.207:8080/wisdomDang/showMenu",
-            contentType:"application/json;charset=UTF-8",
-            data:JSON.stringify({"username":uname}),
-            dataType:"json",
-            header:{
-              "Content-Type":"application/json;charse=UTF-8"
-            },
-            success:function(data){
-              var json_data = data['status'];
-              if("success" == json_data){
-                var mlist = data['menus'];
-                for(x in mlist){    //生成第一层菜单
-                  var power = mlist[x];
-                  if(power['plevel'] == 1){
-                    $("#leftmenu").append("<li class=\"nav-item\" data-toggle=\"tooltip\" data-placement=\"right\" title=\"" + power['pname'] + "\"><a class=\"nav-link\" href=\"dashbord.html\"><i class=\"fa fa-fw fa-dashboard\"></i><span class=\"nav-link-text\">" +power['pname'] + "</span></a></li>");
-                  }
-                }
-              }else{
-                alert("PermissionBanished")
-                $(location).attr('href', 'login.html');
-              }
-            }
-          });
-      });
-      function logout(){
-        $.removeCookie();
-        $(location).attr('href', 'login.html');
-      }  
->>>>>>> branch 'master' of https://github.com/joephoenix/WDFront.git
+      }
     </script>
   </div>
 </body>
-
 </html>
