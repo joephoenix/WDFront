@@ -41,25 +41,24 @@
     </div>
   </nav>
   <div class="content-wrapper">
-    <div class="container-fluid">      
-      <!-- Area Chart Example-->
-      <div class="card mb-3">
-        <div class="card-header">
-        <!--
-        	calendar
-        -->
-        <div class="card-body" id="userCalendar" style="width: 200px; height: 150px;">
-        	
-        </div>
-        <!--
-        	map, use baidu
-        -->
-        <div class="card-body" id="mybadidumap" style="width:200px;height:150px;">        	
-        </div>
+  	<div class="row">
+      <div class="col-lg-6">
+           
       </div>
-    </div>
-    <!-- /.container-fluid-->
-    <!-- /.content-wrapper-->
+      <div class="col-lg-6">
+      	<div class="panel panel-primary">
+      	  <div class="panel-heading">
+            <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i>我的位置</h3>
+         </div>
+         <div class="panel-body">
+         	<div class="flot-chart">
+         		<div class="card-body" id="mybadidumap" style="width:500px;height:350px;"></div>
+          </div>
+         </div>
+       </div>       
+      </div>
+    </div><!-- /.row -->
+  </div><!-- /.content-wrapper-->
     <footer class="sticky-footer">
       <div class="container">
         <div class="text-center">
